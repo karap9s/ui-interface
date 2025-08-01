@@ -3,6 +3,7 @@ import '@radix-ui/themes/styles.css';
 
 import type { Metadata } from 'next';
 import { Theme } from '@radix-ui/themes';
+import Header from '@/src/components/widgets/Header/ui/Header';
 
 export const metadata: Metadata = {
   title: 'Ui-Interface',
@@ -16,8 +17,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
-        <Theme>{children}</Theme>
+      <body className="max-h-dvh">
+        <Theme>
+          <Header />
+          {children}
+        </Theme>
       </body>
     </html>
   );
