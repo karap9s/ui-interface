@@ -1,5 +1,5 @@
+import { TableCell } from '@/src/components/entities/table';
 import React, { FC, JSX } from 'react';
-import { TableCell } from '../../../entities/table';
 
 interface TableRowProps {
   row: Record<string, unknown>;
@@ -11,13 +11,14 @@ const TableRow: FC<TableRowProps> = ({ row, columns, index }): JSX.Element => {
   return (
     <div
       key={`${row.id}-${index}`}
-      className="grid hover:bg-gray-50 transition-colors"
+      className="grid hover:bg-gray-50 transition-colors hover:cursor-pointer"
       style={{ gridTemplateColumns: `repeat(${columns.length}, 1fr)` }}
     >
-      {columns.map((key) => (
+      {columns.map((columnKey) => (
         <TableCell
-          key={key}
-          value={row[key]}
+          key={columnKey}
+          row={row}
+          columnKey={columnKey}
         />
       ))}
     </div>

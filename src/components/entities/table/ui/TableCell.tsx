@@ -1,13 +1,17 @@
 import React, { FC, JSX } from 'react';
-import { isValidDateString, formatDate } from '../../../shared/lib/dateUtils';
-import Badge from '../../../shared/ui/Badge';
+import { getNestedValue } from '@/src/components/shared/lib/tableHelpers';
+import Badge from '@/src/components/shared/ui/Badge';
+import { formatDate, isValidDateString } from '@/src/components/shared/lib/dateUtils';
 
 interface TableCellProps {
-  value: unknown;
+  row: Record<string, unknown>;
+  columnKey: string;
   className?: string;
 }
 
-const TableCell: FC<TableCellProps> = ({ value, className = "px-4 py-3 text-gray-900" }): JSX.Element => {
+const TableCell: FC<TableCellProps> = ({ row, columnKey, className = "px-4 py-3 text-gray-900" }): JSX.Element => {
+  const value = getNestedValue(row, columnKey);
+
   const renderValue = (): JSX.Element | string => {
     if (value === null || value === undefined) {
       return '';

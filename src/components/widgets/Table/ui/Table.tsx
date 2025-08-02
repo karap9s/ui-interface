@@ -1,8 +1,11 @@
-import { FC, JSX } from "react";
+import { FC, JSX, useState } from "react";
 import { TableProps } from "../model/types";
-import { TableHeader, TableRow } from "@/src/components/features/table";
+import { TableHeader, TableBody } from "@/src/components/features/table";
+import { extractColumnsFromData, sortData, SortConfig } from "@/src/components/shared/lib/tableHelpers";
 
 const Table: FC<TableProps> = ({ items }): JSX.Element => {
+  const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
+
   if (!items.length) {
     return (
       <div className="border border-gray-200 rounded-lg">
@@ -13,25 +16,39 @@ const Table: FC<TableProps> = ({ items }): JSX.Element => {
     );
   }
 
-  // Get keys from the first object for headers, and exclude 'id' as utility key
-  const columns = Object.keys(items[0]).filter(key => key !== 'id');
+  // Extract columns including nested object properties
+  const columns = extractColumnsFromData(items);
+
+  // Handle sorting
+  const handleSort = (key: string) => {
+    setSortConfig(current => {
+      if (current?.key === key) {
+        // Same column clicked - toggle between asc and desc
+        return { 
+          key, 
+          direction: current.direction === 'asc' ? 'desc' : 'asc' 
+        };
+      } else {
+        // Different column clicked - start with ascending
+        return { key, direction: 'asc' };
+      }
+    });
+  };
+
+  // Sort data based on current sort config
+  const sortedItems = sortData(items, sortConfig);
 
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden">
       {/* Header */}
-      <TableHeader columns={columns} />
+      <TableHeader 
+        columns={columns} 
+        sortConfig={sortConfig}
+        onSort={handleSort}
+      />
 
-      {/* Body */}
-      <div className="divide-y divide-gray-200">
-        {items.map((row, index) => (
-          <TableRow
-            key={`${row.id}-${index}`}
-            row={row}
-            columns={columns}
-            index={index}
-          />
-        ))}
-      </div>
+      {/* Body with scroll */}
+      <TableBody items={sortedItems} columns={columns} />
     </div>
   );
 };
