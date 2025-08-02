@@ -1,6 +1,6 @@
 import { FC, JSX } from "react";
 import { TableProps } from "../model/types";
-import { parseTableHeader, formatTableValue } from "../../../shared/lib/utils";
+import { TableHeader, TableRow } from "../../../features/table";
 
 const Table: FC<TableProps> = ({ items }): JSX.Element => {
   if (!items.length) {
@@ -19,37 +19,17 @@ const Table: FC<TableProps> = ({ items }): JSX.Element => {
   return (
     <div className="border border-gray-200 rounded-lg overflow-hidden">
       {/* Header */}
-      <div 
-        className="grid bg-gray-50 border-b border-gray-200"
-        style={{ gridTemplateColumns: `repeat(${columns.length}, 1fr)` }}
-      >
-        {columns.map((key) => (
-          <div
-            key={key}
-            className="px-4 py-3 font-medium text-gray-700"
-          >
-            {parseTableHeader(key)}
-          </div>
-        ))}
-      </div>
+      <TableHeader columns={columns} />
 
       {/* Body */}
       <div className="divide-y divide-gray-200">
         {items.map((row, index) => (
-          <div
+          <TableRow
             key={`${row.id}-${index}`}
-            className="grid hover:bg-gray-50 transition-colors"
-            style={{ gridTemplateColumns: `repeat(${columns.length}, 1fr)` }}
-          >
-            {columns.map((key) => (
-              <div
-                key={key}
-                className="px-4 py-3 text-gray-900"
-              >
-                {formatTableValue(row[key])}
-              </div>
-            ))}
-          </div>
+            row={row}
+            columns={columns}
+            index={index}
+          />
         ))}
       </div>
     </div>
