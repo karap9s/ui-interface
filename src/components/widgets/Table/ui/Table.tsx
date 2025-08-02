@@ -1,6 +1,6 @@
 import { FC, JSX } from "react";
 import { TableProps } from "../model/types";
-import { TableHeader, TableRow } from "../../../features/table";
+import { TableHeader, TableRow } from "@/src/components/features/table";
 
 const Table: FC<TableProps> = ({ items }): JSX.Element => {
   if (!items.length) {
