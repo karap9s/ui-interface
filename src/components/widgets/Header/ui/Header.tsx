@@ -15,9 +15,7 @@ import { usePathname } from 'next/navigation';
 const Header = (): JSX.Element => {
   const pathname = usePathname();
 
-  const isActive = (href: string) => {
-    return pathname.includes(href);
-  };
+  const isActive = (href: string) => pathname.includes(href);
 
   return (
     <header>

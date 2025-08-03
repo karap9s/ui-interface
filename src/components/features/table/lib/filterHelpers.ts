@@ -1,4 +1,4 @@
-import { isValidDateString } from './dateUtils';
+import { isValidDateString } from '@/src/components/shared/lib/dateUtils';
 
 export interface FilterConfig {
   key: string;

@@ -14,4 +14,4 @@ export function isFieldEditable(fieldKey: string, row: Record<string, unknown>):
   }
   
   return true;
-}
+} 

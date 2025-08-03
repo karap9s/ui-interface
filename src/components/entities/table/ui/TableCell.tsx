@@ -1,7 +1,7 @@
 import React, { FC, JSX, useMemo, memo } from 'react';
-import { getNestedValue } from '@/src/components/shared/lib/tableHelpers';
 import Badge from '@/src/components/shared/ui/Badge';
 import { formatDate, isValidDateString } from '@/src/components/shared/lib/dateUtils';
+import { getNestedValue } from '@/src/components/features/table/lib/tableHelpers';
 
 interface TableCellProps {
   row: Record<string, unknown>;

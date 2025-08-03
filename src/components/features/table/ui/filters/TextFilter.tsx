@@ -1,6 +1,6 @@
 import React, { FC, useState, useEffect, useCallback, memo } from 'react';
 import { useDebounce } from '@uidotdev/usehooks';
-import { FilterConfig } from '../../lib/filterHelpers';
+import { FilterConfig } from '@/src/components/features/table/lib/filterHelpers';
 
 interface TextFilterProps {
   config: FilterConfig;

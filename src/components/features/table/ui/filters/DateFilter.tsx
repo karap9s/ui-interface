@@ -1,4 +1,4 @@
-import { FilterConfig } from '@/src/components/shared/lib/filterHelpers';
+import { FilterConfig } from '@/src/components/features/table/lib/filterHelpers';
 import React, { FC, useCallback, memo, useMemo } from 'react';
 import { DatePicker, Label, Group, DateInput, DateSegment, Button, Popover, Dialog, Calendar, CalendarGrid, CalendarCell, Heading, I18nProvider } from 'react-aria-components';
 import { Calendar as CalendarIcon, ChevronLeft, ChevronRight } from 'lucide-react';

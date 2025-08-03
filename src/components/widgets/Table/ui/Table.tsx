@@ -1,10 +1,10 @@
 import { FC, JSX, useState, useMemo, useCallback } from "react";
 import { TableProps } from "../model/types";
 import { TableHeader, TableBody, TableFilters } from "@/src/components/features/table";
-import { extractColumnsFromData, sortData, SortConfig } from "@/src/components/shared/lib/tableHelpers";
-import { extractFilterConfigs, applyFilters, FilterValue } from "@/src/components/shared/lib/filterHelpers";
+import { extractColumnsFromData, sortData, SortConfig } from "@/src/components/features/table/lib/tableHelpers";
+import { extractFilterConfigs, applyFilters, FilterValue } from "@/src/components/features/table/lib/filterHelpers";
 import { useModalStore } from "@/src/components/entities/modal/store/modalStore";
-import EditRowDialog from "@/src/components/shared/ui/EditRowDialog";
+import EditRowDialog from "@/src/components/features/table/ui/EditRowDialog";
 
 const Table: FC<TableProps> = ({ items }): JSX.Element => {
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);

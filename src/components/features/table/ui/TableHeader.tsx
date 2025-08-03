@@ -1,5 +1,6 @@
-import { SortConfig } from '@/src/components/shared/lib/tableHelpers';
+import { SortConfig } from '../lib/tableHelpers';
 import { parseTableHeader } from '@/src/components/shared/lib/utils';
+import { ArrowUpIcon, ArrowDownIcon } from 'lucide-react';
 import React, { FC, JSX, useCallback, memo } from 'react';
 
 interface TableHeaderProps {
@@ -9,10 +10,10 @@ interface TableHeaderProps {
 }
 
 const TableHeader: FC<TableHeaderProps> = memo(({ columns, sortConfig, onSort }): JSX.Element => {
-  const getSortIcon = useCallback((columnKey: string): string => {
+  const getSortIcon = useCallback((columnKey: string): React.ReactNode => {
     if (sortConfig?.key !== columnKey) return '';
     
-    return sortConfig.direction === 'asc' ? '↑' : '↓';
+    return sortConfig.direction === 'asc' ? <ArrowUpIcon size={16} /> : <ArrowDownIcon size={16} />;
   }, [sortConfig]);
 
   const handleSort = useCallback((key: string) => {

@@ -14,7 +14,6 @@ const TableBody: FC<TableBodyProps> = memo(({ items, columns }): JSX.Element => 
           key={`${row.id}-${index}`}
           row={row}
           columns={columns}
-          index={index}
         />
       ))}
     </div>

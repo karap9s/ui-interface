@@ -1,4 +1,4 @@
-import { FilterValue } from "@/src/components/shared/lib/filterHelpers";
+import { FilterValue } from "../lib/filterHelpers";
 
 export function getFilterValue(values: FilterValue[], key: string) {
   const filter = values.find(f => f.key === key);

@@ -1,7 +1,7 @@
 import React, { FC, useCallback, memo } from 'react';
 import * as Select from '@radix-ui/react-select';
 import { ChevronDownIcon, CheckIcon } from 'lucide-react';
-import { FilterConfig } from '@/src/components/shared/lib/filterHelpers';
+import { FilterConfig } from '@/src/components/features/table/lib/filterHelpers';
 
 interface BooleanFilterProps {
   config: FilterConfig;

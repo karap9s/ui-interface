@@ -1,9 +1,9 @@
 import React, { FC, useCallback, memo } from 'react';
 import { getFilterValue, updateFilter, clearAllFilters, formatDisplayValue } from '../model/filterModel';
-import { FilterConfig, FilterValue } from '@/src/components/shared/lib/filterHelpers';
-import TextFilter from '@/src/components/shared/ui/filters/TextFilter';
-import BooleanFilter from '@/src/components/shared/ui/filters/BooleanFilter';
-import DateFilter from '@/src/components/shared/ui/filters/DateFilter';
+import { FilterConfig, FilterValue } from '../lib/filterHelpers';
+import TextFilter from './filters/TextFilter';
+import BooleanFilter from './filters/BooleanFilter';
+import DateFilter from './filters/DateFilter';
 
 interface TableFiltersProps {
   configs: FilterConfig[];
