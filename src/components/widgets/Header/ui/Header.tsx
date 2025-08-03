@@ -30,7 +30,7 @@ const Header = (): JSX.Element => {
               <NavigationMenuTrigger
                 className={cn(
                   'text-gray-500 hover:text-gray-600',
-                  isActive(element.href) && 'text-gray-800 hover:text-black'
+                  isActive(element.href) && 'text-gray-800 hover:text-black font-[450]'
                 )}
               >
                 <Link href={element.href}>{element.label}</Link>

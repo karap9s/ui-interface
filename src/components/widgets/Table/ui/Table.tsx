@@ -1,10 +1,25 @@
-import { FC, JSX, useState } from "react";
+import { FC, JSX, useState, useMemo } from "react";
 import { TableProps } from "../model/types";
-import { TableHeader, TableBody } from "@/src/components/features/table";
+import { TableHeader, TableBody, TableFilters } from "@/src/components/features/table";
 import { extractColumnsFromData, sortData, SortConfig } from "@/src/components/shared/lib/tableHelpers";
+import { extractFilterConfigs, applyFilters, FilterValue } from "@/src/components/shared/lib/filterHelpers";
 
 const Table: FC<TableProps> = ({ items }): JSX.Element => {
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
+  const [filters, setFilters] = useState<FilterValue[]>([]);
+
+  // Extract columns and filter configs
+  const columns = useMemo(() => extractColumnsFromData(items), [items]);
+  const filterConfigs = useMemo(() => extractFilterConfigs(items), [items]);
+
+  // Apply filters and sorting
+  const processedItems = useMemo(() => {
+    if (!items.length) return [];
+    
+    let result = applyFilters(items, filters);
+    result = sortData(result, sortConfig);
+    return result;
+  }, [items, filters, sortConfig]);
 
   if (!items.length) {
     return (
@@ -15,9 +30,6 @@ const Table: FC<TableProps> = ({ items }): JSX.Element => {
       </div>
     );
   }
-
-  // Extract columns including nested object properties
-  const columns = extractColumnsFromData(items);
 
   // Handle sorting
   const handleSort = (key: string) => {
@@ -35,20 +47,25 @@ const Table: FC<TableProps> = ({ items }): JSX.Element => {
     });
   };
 
-  // Sort data based on current sort config
-  const sortedItems = sortData(items, sortConfig);
-
   return (
-    <div className="border border-gray-200 rounded-lg overflow-hidden">
-      {/* Header */}
-      <TableHeader 
-        columns={columns} 
-        sortConfig={sortConfig}
-        onSort={handleSort}
+    <div className="space-y-4">
+      {/* Filters */}
+      <TableFilters 
+        configs={filterConfigs}
+        values={filters}
+        onChange={setFilters}
       />
 
-      {/* Body with scroll */}
-      <TableBody items={sortedItems} columns={columns} />
+      {/* Table */}
+      <div className="border border-gray-200 rounded-lg overflow-hidden">
+        <TableHeader 
+          columns={columns} 
+          sortConfig={sortConfig}
+          onSort={handleSort}
+        />
+
+        <TableBody items={processedItems} columns={columns} />
+      </div>
     </div>
   );
 };
