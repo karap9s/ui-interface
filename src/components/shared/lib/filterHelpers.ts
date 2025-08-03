@@ -1,22 +1,19 @@
-import { getNestedValue } from './tableHelpers';
 import { isValidDateString } from './dateUtils';
-
-export type FilterType = 'text' | 'boolean' | 'date';
 
 export interface FilterConfig {
   key: string;
-  type: FilterType;
   label: string;
+  type: 'text' | 'boolean' | 'date';
 }
 
 export interface FilterValue {
   key: string;
   value: unknown;
-  type: FilterType;
+  type: string;
 }
 
-// Автоматически определяет тип фильтра по значению
-export function detectFilterType(value: unknown): FilterType {
+// Automatically determines filter type by value
+export function detectFilterType(value: unknown): 'text' | 'boolean' | 'date' {
   if (typeof value === 'boolean') {
     return 'boolean';
   }
@@ -28,14 +25,13 @@ export function detectFilterType(value: unknown): FilterType {
   return 'text';
 }
 
-// Извлекает конфигурацию фильтров из данных
+// Extracts filter configurations from data
 export function extractFilterConfigs(data: Array<Record<string, unknown>>): FilterConfig[] {
   if (!data.length) return [];
-
-  const firstRow = data[0];
+  
   const configs: FilterConfig[] = [];
-
-  const processObject = (obj: Record<string, unknown>, prefix = '') => {
+  
+  function processObject(obj: Record<string, unknown>, prefix = '') {
     Object.keys(obj).forEach(key => {
       if (key === 'id') return; // Skip id field
 
@@ -43,67 +39,65 @@ export function extractFilterConfigs(data: Array<Record<string, unknown>>): Filt
       const value = obj[key];
 
       if (value && typeof value === 'object' && !Array.isArray(value) && !(value instanceof Date)) {
-        // Рекурсивно обрабатываем вложенные объекты
+        // Recursively process nested objects
         processObject(value as Record<string, unknown>, fullKey);
       } else {
-        const type = detectFilterType(value);
+        // Use only the last part of the key for the label
         const label = fullKey.split('.').pop()!
           .replace(/([a-z])([A-Z])/g, '$1 $2')
           .replace(/_/g, ' ')
           .replace(/-/g, ' ')
           .replace(/\b\w/g, letter => letter.toUpperCase());
 
-        configs.push({
-          key: fullKey,
-          type,
-          label
-        });
+        const type = detectFilterType(value);
+        
+        const existing = configs.find(c => c.key === fullKey);
+        if (!existing) {
+          configs.push({
+            key: fullKey,
+            label,
+            type
+          });
+        }
       }
     });
-  };
-
-  processObject(firstRow);
+  }
+  
+  processObject(data[0]);
   return configs;
 }
 
-// Применяет фильтры к данным
-export function applyFilters(
-  data: Array<Record<string, unknown>>,
-  filters: FilterValue[]
-): Array<Record<string, unknown>> {
+// Applies filters to data
+export function applyFilters(data: Array<Record<string, unknown>>, filters: FilterValue[]): Array<Record<string, unknown>> {
   if (!filters.length) return data;
 
-  return data.filter(row => {
+  return data.filter(item => {
     return filters.every(filter => {
-      const value = getNestedValue(row, filter.key);
+      const value = getNestedValue(item, filter.key);
       
+      if (filter.value === null || filter.value === undefined || filter.value === '') {
+        return true;
+      }
+
       switch (filter.type) {
         case 'text':
-          if (!filter.value || typeof filter.value !== 'string') return true;
-          const searchText = filter.value.toLowerCase();
-          const fieldValue = String(value || '').toLowerCase();
-          return fieldValue.includes(searchText);
-
+          return String(value || '').toLowerCase().includes(String(filter.value).toLowerCase());
         case 'boolean':
-          if (filter.value === null || filter.value === undefined || filter.value === '') return true;
           return value === filter.value;
-
         case 'date':
-          if (!filter.value) return true;
-          
-          // Single date filter
-          if (typeof filter.value !== 'string') return true;
-          const filterDate = new Date(filter.value);
-          const itemDate = new Date(String(value));
-          
-          if (isNaN(filterDate.getTime()) || isNaN(itemDate.getTime())) return true;
-          
-          // Compare only date part (ignore time)
-          return filterDate.toDateString() === itemDate.toDateString();
-
+          if (typeof value === 'string' && isValidDateString(value)) {
+            return value.startsWith(String(filter.value));
+          }
+          return false;
         default:
           return true;
       }
     });
   });
+}
+
+function getNestedValue(obj: Record<string, unknown>, path: string): unknown {
+  return path.split('.').reduce((current, key) => {
+    return current && typeof current === 'object' ? (current as Record<string, unknown>)[key] : undefined;
+  }, obj as unknown);
 } 

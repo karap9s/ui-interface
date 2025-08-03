@@ -1,4 +1,4 @@
-import { FilterType, FilterValue } from "@/src/components/shared/lib/filterHelpers";
+import { FilterValue } from "@/src/components/shared/lib/filterHelpers";
 
 export function getFilterValue(values: FilterValue[], key: string) {
   const filter = values.find(f => f.key === key);
@@ -18,7 +18,7 @@ export function updateFilter(
     newFilters.push({
       key,
       value,
-      type: type as FilterType
+      type
     });
   }
   

@@ -1,4 +1,4 @@
-import React, { FC, JSX } from 'react';
+import React, { FC, JSX, useMemo, memo } from 'react';
 import { getNestedValue } from '@/src/components/shared/lib/tableHelpers';
 import Badge from '@/src/components/shared/ui/Badge';
 import { formatDate, isValidDateString } from '@/src/components/shared/lib/dateUtils';
@@ -9,10 +9,10 @@ interface TableCellProps {
   className?: string;
 }
 
-const TableCell: FC<TableCellProps> = ({ row, columnKey, className = "px-4 py-3 text-gray-900" }): JSX.Element => {
-  const value = getNestedValue(row, columnKey);
+const TableCell: FC<TableCellProps> = memo(({ row, columnKey, className = "px-4 py-3 text-gray-900" }): JSX.Element => {
+  const value = useMemo(() => getNestedValue(row, columnKey), [row, columnKey]);
 
-  const renderValue = (): JSX.Element | string => {
+  const renderedValue = useMemo((): JSX.Element | string => {
     if (value === null || value === undefined) {
       return '';
     }
@@ -26,13 +26,15 @@ const TableCell: FC<TableCellProps> = ({ row, columnKey, className = "px-4 py-3 
     }
 
     return String(value);
-  };
+  }, [value]);
 
   return (
     <div className={className}>
-      {renderValue()}
+      {renderedValue}
     </div>
   );
-};
+});
+
+TableCell.displayName = 'TableCell';
 
 export default TableCell; 

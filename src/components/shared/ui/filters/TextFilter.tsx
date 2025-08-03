@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useCallback, memo } from 'react';
 import { useDebounce } from '@uidotdev/usehooks';
 import { FilterConfig } from '../../lib/filterHelpers';
 
@@ -8,7 +8,7 @@ interface TextFilterProps {
   onChange: (value: string) => void;
 }
 
-const TextFilter: FC<TextFilterProps> = ({ config, value, onChange }) => {
+const TextFilter: FC<TextFilterProps> = memo(({ config, value, onChange }) => {
   const [inputValue, setInputValue] = useState(value);
   const debouncedValue = useDebounce(inputValue, 300);
 
@@ -22,6 +22,10 @@ const TextFilter: FC<TextFilterProps> = ({ config, value, onChange }) => {
     }
   }, [debouncedValue, value, onChange]);
 
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  }, []);
+
   return (
     <div className="flex flex-col">
       <label className="text-sm font-medium text-gray-700 mb-1">
@@ -30,12 +34,14 @@ const TextFilter: FC<TextFilterProps> = ({ config, value, onChange }) => {
       <input
         type="text"
         value={inputValue}
-        onChange={(e) => setInputValue(e.target.value)}
+        onChange={handleInputChange}
         placeholder={`Search ${config.label.toLowerCase()}...`}
-        className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 h-9.5"
+        className="p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 h-9.5"
       />
     </div>
   );
-};
+});
+
+TextFilter.displayName = 'TextFilter';
 
 export default TextFilter; 

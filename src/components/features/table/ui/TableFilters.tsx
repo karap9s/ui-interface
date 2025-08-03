@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, memo } from 'react';
 import { getFilterValue, updateFilter, clearAllFilters, formatDisplayValue } from '../model/filterModel';
 import { FilterConfig, FilterValue } from '@/src/components/shared/lib/filterHelpers';
 import TextFilter from '@/src/components/shared/ui/filters/TextFilter';
@@ -11,16 +11,20 @@ interface TableFiltersProps {
   onChange: (filters: FilterValue[]) => void;
 }
 
-const TableFilters: FC<TableFiltersProps> = ({ configs, values, onChange }) => {
-  const handleUpdateFilter = (key: string, value: unknown, type: string) => {
+const TableFilters: FC<TableFiltersProps> = memo(({ configs, values, onChange }) => {
+  const handleUpdateFilter = useCallback((key: string, value: unknown, type: string) => {
     const newFilters = updateFilter(values, key, value, type);
     onChange(newFilters);
-  };
+  }, [values, onChange]);
 
-  const handleClearAllFilters = () => {
+  const handleClearAllFilters = useCallback(() => {
     const newFilters = clearAllFilters();
     onChange(newFilters);
-  };
+  }, [onChange]);
+
+  const handleRemoveFilter = useCallback((key: string, type: string) => {
+    handleUpdateFilter(key, null, type);
+  }, [handleUpdateFilter]);
 
   return (
     <div className="bg-white p-4 border border-gray-200 rounded-lg mb-4">
@@ -39,14 +43,15 @@ const TableFilters: FC<TableFiltersProps> = ({ configs, values, onChange }) => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {configs.map((config) => {
           const value = getFilterValue(values, config.key);
+          const stringValue = (value as string) || '';
           
           switch (config.type) {
             case 'text':
               return (
                 <TextFilter
-                  key={config.key}
+                  key={`${config.key}-${stringValue}`}
                   config={config}
-                  value={(value as string) || ''}
+                  value={stringValue}
                   onChange={(newValue) => handleUpdateFilter(config.key, newValue, config.type)}
                 />
               );
@@ -56,7 +61,7 @@ const TableFilters: FC<TableFiltersProps> = ({ configs, values, onChange }) => {
                 <BooleanFilter
                   key={config.key}
                   config={config}
-                  value={value as boolean | null}
+                  value={value as boolean | null ?? null}
                   onChange={(newValue) => handleUpdateFilter(config.key, newValue, config.type)}
                 />
               );
@@ -64,8 +69,9 @@ const TableFilters: FC<TableFiltersProps> = ({ configs, values, onChange }) => {
             case 'date':
               return (
                 <DateFilter
-                  key={config.key}
+                  key={`${config.key}-${stringValue}`}
                   config={config}
+                  value={stringValue}
                   onChange={(newValue) => handleUpdateFilter(config.key, newValue, config.type)}
                 />
               );
@@ -93,7 +99,7 @@ const TableFilters: FC<TableFiltersProps> = ({ configs, values, onChange }) => {
                 >
                   {config.label}: {displayValue}
                   <button
-                    onClick={() => handleUpdateFilter(filter.key, null, filter.type)}
+                    onClick={() => handleRemoveFilter(filter.key, filter.type)}
                     className="hover:text-blue-600 focus:outline-none"
                   >
                     ×
@@ -106,6 +112,8 @@ const TableFilters: FC<TableFiltersProps> = ({ configs, values, onChange }) => {
       )}
     </div>
   );
-};
+});
+
+TableFilters.displayName = 'TableFilters';
 
 export default TableFilters; 

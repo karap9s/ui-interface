@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, memo } from 'react';
 import * as Select from '@radix-ui/react-select';
 import { ChevronDownIcon, CheckIcon } from 'lucide-react';
 import { FilterConfig } from '@/src/components/shared/lib/filterHelpers';
@@ -11,14 +11,14 @@ interface BooleanFilterProps {
 
 const { Root, Trigger, Value, Icon, Content, Item, ItemText, ItemIndicator, Portal, Viewport } = Select;
 
-const BooleanFilter: FC<BooleanFilterProps> = ({ config, value, onChange }) => {
-  const handleValueChange = (selectedValue: string) => {
+const BooleanFilter: FC<BooleanFilterProps> = memo(({ config, value, onChange }) => {
+  const handleValueChange = useCallback((selectedValue: string) => {
     if (selectedValue === 'all') {
       onChange(null);
     } else {
       onChange(selectedValue === 'true');
     }
-  };
+  }, [onChange]);
 
   const currentValue = value === null ? 'all' : String(value);
 
@@ -28,7 +28,7 @@ const BooleanFilter: FC<BooleanFilterProps> = ({ config, value, onChange }) => {
         {config.label}
       </label>
       <Root value={currentValue} onValueChange={handleValueChange}>
-        <Trigger className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white hover:bg-gray-50 data-[placeholder]:text-gray-500 hover:cursor-pointer inline-flex items-center justify-between h-9.5">
+        <Trigger className="p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white hover:bg-gray-50 data-[placeholder]:text-gray-500 hover:cursor-pointer inline-flex items-center justify-between h-9.5">
           <Value placeholder="All" />
           <Icon asChild>
             <ChevronDownIcon className="h-4 w-4 text-gray-400" />
@@ -64,6 +64,8 @@ const BooleanFilter: FC<BooleanFilterProps> = ({ config, value, onChange }) => {
       </Root>
     </div>
   );
-};
+});
+
+BooleanFilter.displayName = 'BooleanFilter';
 
 export default BooleanFilter; 
