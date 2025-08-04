@@ -8,5 +8,5 @@ interface ErrorProps {
 }
 
 export default function Error({ error, reset }: ErrorProps) {
-  return <ErrorPage error={error} reset={reset} />;
-} 
+  return <ErrorPage reset={reset} />;
+}

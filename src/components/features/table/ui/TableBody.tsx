@@ -6,20 +6,29 @@ interface TableBodyProps {
   columns: string[];
 }
 
-const TableBody: FC<TableBodyProps> = memo(({ items, columns }): JSX.Element => {
-  return (
-    <div className="divide-y divide-gray-200 max-h-[calc(100dvh-56px)] overflow-y-auto">
-      {items.map((row, index) => (
-        <TableRow
-          key={`${row.id}-${index}`}
-          row={row}
-          columns={columns}
-        />
-      ))}
-    </div>
-  );
-});
+const TableBody: FC<TableBodyProps> = memo(
+  ({ items, columns }): JSX.Element => {
+    return (
+      <div className="divide-y divide-gray-200 max-h-[calc(100dvh-56px)] overflow-y-auto">
+        {items.map((row, index) => {
+          try {
+            return (
+              <TableRow
+                key={`${row.id}-${index}`}
+                row={row}
+                columns={columns}
+              />
+            );
+          } catch (error) {
+            console.error(error, { row, index });
+            return null;
+          }
+        })}
+      </div>
+    );
+  }
+);
 
 TableBody.displayName = 'TableBody';
 
-export default TableBody; 
+export default TableBody;

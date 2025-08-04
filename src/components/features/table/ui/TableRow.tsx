@@ -20,17 +20,18 @@ const TableRow: FC<TableRowProps> = memo(({ row, columns }): JSX.Element => {
       style={{ gridTemplateColumns: `repeat(${columns.length}, 1fr)` }}
       onClick={handleRowClick}
     >
-      {columns.map((columnKey) => (
-        <TableCell
-          key={columnKey}
-          row={row}
-          columnKey={columnKey}
-        />
-      ))}
+      {columns.map((columnKey) => {
+        try {
+          return <TableCell key={columnKey} row={row} columnKey={columnKey} />;
+        } catch (error) {
+          console.error(error, { columnKey, row });
+          return null;
+        }
+      })}
     </div>
   );
 });
 
 TableRow.displayName = 'TableRow';
 
-export default TableRow; 
+export default TableRow;

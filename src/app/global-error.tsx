@@ -11,8 +11,8 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
   return (
     <html>
       <body>
-        <GlobalErrorPage error={error} reset={reset} />
+        <GlobalErrorPage reset={reset} />
       </body>
     </html>
   );
-} 
+}

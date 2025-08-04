@@ -8,7 +8,7 @@ const PagesPage = () => {
   const pagesStore = createSelectors(usePagesStore);
   const items = pagesStore.use.items();
 
-  return <div><Table items={items} /></div>;
+  return <Table items={items} />;
 };
 
 export default PagesPage;

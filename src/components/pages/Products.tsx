@@ -1,14 +1,14 @@
 'use client';
 
-import { createSelectors } from "@/src/components/shared/configs/store";
-import { useProductsStore } from "@/src/components/entities/products";
-import { Table } from "@/src/components/widgets/Table";
+import { createSelectors } from '@/src/components/shared/configs/store';
+import { useProductsStore } from '@/src/components/entities/products';
+import { Table } from '@/src/components/widgets/Table';
 
 const ProductsPage = () => {
   const productsStore = createSelectors(useProductsStore);
   const items = productsStore.use.items();
 
-  return <div><Table items={items} /></div>;
+  return <Table items={items} />;
 };
 
 export default ProductsPage;

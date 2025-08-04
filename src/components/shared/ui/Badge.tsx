@@ -1,4 +1,4 @@
-import React, { FC, JSX } from 'react';
+import React, { FC, JSX, memo } from 'react';
 import { Badge as RadixBadge } from '@radix-ui/themes';
 
 interface BadgeProps {
@@ -9,21 +9,21 @@ interface BadgeProps {
   highContrast?: boolean;
 }
 
-const Badge: FC<BadgeProps> = ({ 
-  value, 
-  trueLabel = 'Active', 
-  falseLabel = 'Inactive',
-  variant = 'soft'
-}): JSX.Element => {
-  return (
-    <RadixBadge 
-      color={value ? 'green' : 'red'}
-      variant={variant}
-      size="3"
-    >
-      {value ? trueLabel : falseLabel}
-    </RadixBadge>
-  );
-};
+const Badge: FC<BadgeProps> = memo(
+  ({
+    value,
+    trueLabel = 'Active',
+    falseLabel = 'Inactive',
+    variant = 'soft',
+  }): JSX.Element => {
+    return (
+      <RadixBadge color={value ? 'green' : 'red'} variant={variant} size="3">
+        {value ? trueLabel : falseLabel}
+      </RadixBadge>
+    );
+  }
+);
 
-export default Badge; 
+Badge.displayName = 'Badge';
+
+export default Badge;
