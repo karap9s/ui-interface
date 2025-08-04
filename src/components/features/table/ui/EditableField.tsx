@@ -134,9 +134,9 @@ const EditableField: FC<EditableFieldProps> = memo(
             >
               <Trigger
                 className={cn(
-                  'w-full p-2 border border-gray-300 dark:border-slate-600 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-slate-900 hover:cursor-pointer inline-flex items-center justify-between h-9',
+                  'w-full p-2 border border-gray-300 dark:border-[#484E54] rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-[#00000040] hover:cursor-pointer inline-flex items-center justify-between h-9',
                   !editable
-                    ? 'bg-gray-50 dark:bg-slate-900 text-gray-500 dark:text-slate-300 cursor-not-allowed'
+                    ? 'bg-gray-50 dark:bg-[#00000040] text-gray-500 dark:text-slate-300 cursor-not-allowed'
                     : 'hover:bg-gray-50'
                 )}
               >
@@ -148,7 +148,7 @@ const EditableField: FC<EditableFieldProps> = memo(
 
               {editable && (
                 <Portal>
-                  <SelectContent className="overflow-hidden bg-white dark:bg-slate-900 rounded-md shadow-lg border border-gray-200 dark:border-slate-800 z-50">
+                  <SelectContent className="overflow-hidden bg-white dark:bg-[#1a1a1a] rounded-md shadow-lg border border-gray-200 dark:border-[#484E54] z-50">
                     <Viewport className="p-1">
                       {booleanOptions.map((option) => (
                         <Item
@@ -212,11 +212,11 @@ const EditableField: FC<EditableFieldProps> = memo(
                 <Label className="sr-only">Date</Label>
                 <Group
                   className={cn(
-                    'flex items-center border border-gray-300 rounded-md overflow-hidden h-9',
+                    'flex items-center border border-gray-300 dark:border-[#484E54] rounded-md overflow-hidden h-9',
                     !editable && 'bg-gray-50'
                   )}
                 >
-                  <DateInput className="p-2 flex-1 text-sm dark:bg-slate-900">
+                  <DateInput className="p-2 flex-1 text-sm dark:bg-[#00000040]">
                     {(segment) => (
                       <DateSegment
                         segment={segment}
@@ -240,7 +240,7 @@ const EditableField: FC<EditableFieldProps> = memo(
                 <Label className="sr-only">Time</Label>
                 <DateInput
                   className={cn(
-                    'flex items-center border border-gray-300 dark:border-slate-600 dark:bg-slate-900 rounded-md p-2 h-9',
+                    'flex items-center border border-gray-300 dark:border-[#484E54] dark:bg-[#00000040] rounded-md p-2 h-9',
                     !editable && 'bg-gray-50'
                   )}
                 >

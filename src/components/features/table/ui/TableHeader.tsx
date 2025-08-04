@@ -33,7 +33,7 @@ const TableHeader: FC<TableHeaderProps> = memo(
 
     return (
       <div
-        className="grid bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200 dark:border-slate-800 dark:bg-slate-900"
+        className="grid bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950 border-b border-slate-200 dark:border-slate-800 dark:bg-slate-900"
         style={{ gridTemplateColumns: `repeat(${columns.length}, 1fr)` }}
       >
         {columns.map((key, index) => (

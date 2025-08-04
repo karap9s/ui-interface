@@ -2,6 +2,7 @@ import React, { FC, useState, useMemo, useCallback, memo } from 'react';
 import { Dialog, Button, Flex } from '@radix-ui/themes';
 import { parseTableHeader } from '@/src/components/shared/lib/utils';
 import EditableField from './EditableField';
+import { toast } from 'sonner';
 
 interface EditRowDialogProps {
   isOpen: boolean;
@@ -120,8 +121,13 @@ const EditRowDialog: FC<EditRowDialogProps> = memo(
     );
 
     const handleSave = useCallback(() => {
-      onSave(formData);
-      onClose();
+      try {
+        onSave(formData);
+        onClose();
+        toast.success('Data saved successfully');
+      } catch (_) {
+        toast.error('Error saving data');
+      }
     }, [formData, onSave, onClose]);
 
     return (

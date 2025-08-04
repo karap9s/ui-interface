@@ -30,7 +30,7 @@ export default function LayoutClient({ children, header }: LayoutClientProps) {
       </div>
 
       <main className="flex-1 container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="max-w-7xl mx-auto">{children}</div>
+        <div className="mx-auto">{children}</div>
       </main>
     </div>
   );

@@ -124,7 +124,7 @@ const Table: FC<TableProps> = ({ items, updateItem }): JSX.Element => {
       </AnimatedContainer>
 
       <AnimatedContainer delay={200}>
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden transform hover:shadow-md transition-shadow duration-300">
+        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden transform hover:shadow-md transition-shadow duration-300">
           <TableHeader
             columns={columns}
             sortConfig={sortConfig}

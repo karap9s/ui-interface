@@ -28,13 +28,10 @@ export default function ThemeToggleButton({
 
   const styleId = 'theme-transition-styles';
 
-  const updateStyles = React.useCallback((css: string, name: string) => {
+  const updateStyles = React.useCallback((css: string) => {
     if (typeof window === 'undefined') return;
 
     let styleElement = document.getElementById(styleId) as HTMLStyleElement;
-
-    console.log('style ELement', styleElement);
-    console.log('name', name);
 
     if (!styleElement) {
       styleElement = document.createElement('style');
@@ -43,14 +40,12 @@ export default function ThemeToggleButton({
     }
 
     styleElement.textContent = css;
-
-    console.log('content updated');
   }, []);
 
   const toggleTheme = React.useCallback(() => {
     const animation = createAnimation(variant, start, url);
 
-    updateStyles(animation.css, animation.name);
+    updateStyles(animation.css);
 
     if (typeof window === 'undefined') return;
 
@@ -64,14 +59,14 @@ export default function ThemeToggleButton({
     }
 
     document.startViewTransition(switchTheme);
-  }, [theme, setTheme]);
+  }, [variant, start, url, updateStyles, setTheme, theme]);
 
   return (
     <Button
       onClick={toggleTheme}
       variant="ghost"
       size="icon"
-      className="w-9 p-0 h-9 relative group"
+      className="w-9 p-0 h-9 relative group hover:cursor-pointer"
       name="Theme Toggle Button"
     >
       <SunIcon className="size-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
