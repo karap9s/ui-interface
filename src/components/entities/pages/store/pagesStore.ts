@@ -4,4 +4,10 @@ import { create } from 'zustand';
 
 export const usePagesStore = create<PagesState>((set) => ({
   items: mockPagesData,
+  updateItem: (updatedItem: Record<string, unknown>) =>
+    set((state) => ({
+      items: state.items.map((item) =>
+        item.id === updatedItem.id ? updatedItem : item
+      ),
+    })),
 }));
