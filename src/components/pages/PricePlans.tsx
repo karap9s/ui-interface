@@ -7,8 +7,9 @@ import { Table } from '@/src/components/widgets/Table';
 const PricePlansPage = () => {
   const pricePlansStore = createSelectors(usePricePlansStore);
   const items = pricePlansStore.use.items();
+  const updateItem = pricePlansStore.use.updateItem();
 
-  return <Table items={items} />;
+  return <Table items={items} updateItem={updateItem} />;
 };
 
 export default PricePlansPage;

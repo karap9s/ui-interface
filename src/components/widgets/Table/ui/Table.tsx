@@ -17,54 +17,52 @@ import {
   FilterValue,
 } from '@/src/components/features/table/lib/filterHelpers';
 import { useModalStore } from '@/src/components/entities/modal/store/modalStore';
-
-const Table: FC<TableProps> = ({ items }): JSX.Element => {
+const Table: FC<TableProps> = ({ items, updateItem }): JSX.Element => {
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
   const [filters, setFilters] = useState<FilterValue[]>([]);
-  const [tableData, setTableData] =
-    useState<Array<Record<string, unknown>>>(items);
 
   const { isEditRowOpen, editRowData, setEditRowOpen } = useModalStore();
 
   // Extract columns and filter configs
   const columns = useMemo(() => {
     try {
-      return extractColumnsFromData(tableData);
+      return extractColumnsFromData(items);
     } catch (error) {
       console.error(error);
       return [];
     }
-  }, [tableData]);
+  }, [items]);
 
   const filterConfigs = useMemo(() => {
     try {
-      return extractFilterConfigs(tableData);
+      return extractFilterConfigs(items);
     } catch (error) {
       console.error(error);
       return [];
     }
-  }, [tableData]);
+  }, [items]);
 
   // Apply filters and sorting
   const processedItems = useMemo(() => {
     try {
-      if (!tableData.length) return [];
+      if (!items.length) return [];
 
-      let result = applyFilters(tableData, filters);
+      let result = applyFilters(items, filters);
       result = sortData(result, sortConfig);
       return result;
     } catch (error) {
       console.error(error);
-      return tableData;
+      return items;
     }
-  }, [tableData, filters, sortConfig]);
+  }, [items, filters, sortConfig]);
 
   // Handle row update
-  const handleRowUpdate = useCallback((updatedRow: Record<string, unknown>) => {
-    setTableData((prevData) =>
-      prevData.map((row) => (row.id === updatedRow.id ? updatedRow : row))
-    );
-  }, []);
+  const handleRowUpdate = useCallback(
+    (updatedRow: Record<string, unknown>) => {
+      updateItem(updatedRow);
+    },
+    [updateItem]
+  );
 
   const handleSort = useCallback((key: string) => {
     setSortConfig((current) => {
@@ -96,7 +94,7 @@ const Table: FC<TableProps> = ({ items }): JSX.Element => {
     [handleRowUpdate, setEditRowOpen]
   );
 
-  if (!tableData.length) {
+  if (!items.length) {
     return (
       <div className="border border-gray-200 rounded-lg">
         <div className="p-8 text-center text-gray-500">No data to display</div>
