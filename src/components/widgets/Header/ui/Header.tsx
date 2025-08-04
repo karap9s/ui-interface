@@ -11,6 +11,7 @@ import {
 import Link from 'next/link';
 import { JSX } from 'react';
 import { usePathname } from 'next/navigation';
+import ThemeToggleButton from '@/src/components/ui/theme-toggle-button';
 
 const Header = (): JSX.Element => {
   const pathname = usePathname();
@@ -44,6 +45,11 @@ const Header = (): JSX.Element => {
             ))}
           </NavigationMenuList>
         </NavigationMenu>
+
+        <ThemeToggleButton
+          variant="gif"
+          url="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3JwcXdzcHd5MW92NWprZXVpcTBtNXM5cG9obWh0N3I4NzFpaDE3byZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/WgsVx6C4N8tjy/giphy.gif"
+        />
       </div>
     </header>
   );

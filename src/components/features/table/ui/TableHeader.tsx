@@ -33,13 +33,13 @@ const TableHeader: FC<TableHeaderProps> = memo(
 
     return (
       <div
-        className="grid bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200"
+        className="grid bg-gradient-to-r from-slate-50 to-slate-100 border-b border-slate-200 dark:border-slate-800 dark:bg-slate-900"
         style={{ gridTemplateColumns: `repeat(${columns.length}, 1fr)` }}
       >
-        {columns.map((key) => (
+        {columns.map((key, index) => (
           <button
-            key={key}
-            className="px-6 py-4 font-semibold text-slate-700 text-left hover:bg-slate-200/50 transition-all duration-200 focus:outline-none focus:bg-slate-200/50 hover:cursor-pointer group"
+            key={`${key}-${index}`}
+            className="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300 text-left dark:bg-slate-950 hover:bg-slate-200/50 dark:hover:bg-slate-900 transition-all duration-200 focus:outline-none focus:bg-slate-200/50 dark:focus:bg-slate-900 hover:cursor-pointer group"
             onClick={() => handleSort(key)}
           >
             <div className="flex items-center justify-between">

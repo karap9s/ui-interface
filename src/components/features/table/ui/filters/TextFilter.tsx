@@ -22,13 +22,16 @@ const TextFilter: FC<TextFilterProps> = memo(({ config, value, onChange }) => {
     }
   }, [debouncedValue, value, onChange]);
 
-  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  }, []);
+  const handleInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputValue(e.target.value);
+    },
+    []
+  );
 
   return (
     <div className="flex flex-col">
-      <label className="text-sm font-medium text-gray-700 mb-1">
+      <label className="text-sm font-medium text-gray-700 mb-1 dark:text-slate-300">
         {config.label}
       </label>
       <input
@@ -36,7 +39,7 @@ const TextFilter: FC<TextFilterProps> = memo(({ config, value, onChange }) => {
         value={inputValue}
         onChange={handleInputChange}
         placeholder={`Search ${config.label.toLowerCase()}...`}
-        className="p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 h-9.5"
+        className="p-2 border border-gray-300 dark:border-slate-600 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 h-9.5"
       />
     </div>
   );
@@ -44,4 +47,4 @@ const TextFilter: FC<TextFilterProps> = memo(({ config, value, onChange }) => {
 
 TextFilter.displayName = 'TextFilter';
 
-export default TextFilter; 
+export default TextFilter;

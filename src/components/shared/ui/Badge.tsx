@@ -23,8 +23,8 @@ const Badge: FC<BadgeProps> = memo(
         size="2"
         className={`${
           value
-            ? 'bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-800 border-emerald-200'
-            : 'bg-gradient-to-r from-red-100 to-pink-100 text-red-800 border-red-200'
+            ? 'bg-gradient-to-r from-emerald-100 to-green-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900 dark:text-emerald-500 dark:border-emerald-800'
+            : 'bg-gradient-to-r from-red-100 to-pink-100 text-red-800 border-red-200 dark:bg-red-900 dark:text-red-100 dark:border-red-800'
         } font-medium shadow-sm`}
       >
         {value ? trueLabel : falseLabel}

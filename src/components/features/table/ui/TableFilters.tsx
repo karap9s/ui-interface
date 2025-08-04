@@ -40,9 +40,9 @@ const TableFilters: FC<TableFiltersProps> = memo(
     );
 
     return (
-      <div className="bg-white p-6 border border-slate-200 rounded-xl shadow-sm mb-6">
+      <div className="bg-white dark:bg-slate-900 p-6 border border-slate-200 dark:border-slate-800 rounded-xl shadow-sm mb-6">
         <div className="flex justify-between items-center mb-6">
-          <h3 className="text-xl font-bold text-slate-900 bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text">
+          <h3 className="text-xl font-bold text-slate-900 bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text dark:text-slate-100">
             Filters
           </h3>
           {values.length > 0 && (
@@ -109,9 +109,9 @@ const TableFilters: FC<TableFiltersProps> = memo(
         </div>
 
         {values.length > 0 && (
-          <div className="mt-6 pt-6 border-t border-slate-200">
+          <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800">
             <div className="flex flex-wrap gap-3">
-              <span className="text-sm font-medium text-slate-600 flex items-center mb-2">
+              <span className="text-sm font-medium text-slate-600 flex items-center mb-2 dark:text-slate-300">
                 Active filters:
               </span>
               {values.map((filter) => {

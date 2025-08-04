@@ -47,7 +47,7 @@ const TableCell: FC<TableCellProps> = memo(
     }, [value, columnKey]);
 
     return (
-      <div className="px-6 py-4 text-slate-700 group-hover:text-slate-900 transition-colors duration-200 flex items-center min-h-[60px]">
+      <div className="px-6 py-4 text-slate-700 group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-slate-100 transition-colors duration-200 flex items-center min-h-[60px]">
         {renderedValue}
       </div>
     );

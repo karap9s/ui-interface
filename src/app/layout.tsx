@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { Theme } from '@radix-ui/themes';
 import Header from '@/src/components/widgets/Header/ui/Header';
 import LayoutClient from '@/src/components/pages/LayoutClient';
+import { ThemeProvider } from 'next-themes';
 
 export const metadata: Metadata = {
   title: 'Ui-Interface',
@@ -19,9 +20,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen">
-        <Theme>
-          <LayoutClient header={<Header />}>{children}</LayoutClient>
-        </Theme>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <Theme>
+            <LayoutClient header={<Header />}>{children}</LayoutClient>
+          </Theme>
+        </ThemeProvider>
       </body>
     </html>
   );
