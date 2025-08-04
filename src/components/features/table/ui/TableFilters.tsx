@@ -40,7 +40,7 @@ const TableFilters: FC<TableFiltersProps> = memo(
     );
 
     return (
-      <div className="bg-white dark:bg-slate-900 p-6 border border-slate-200 rounded-xl shadow-sm mb-6">
+      <div className="bg-white p-6 border border-slate-200 rounded-xl shadow-sm mb-6">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-bold text-slate-900 bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text">
             Filters
