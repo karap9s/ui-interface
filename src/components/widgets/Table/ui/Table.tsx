@@ -97,7 +97,7 @@ const Table: FC<TableProps> = ({ items, updateItem }): JSX.Element => {
 
   if (!items.length) {
     return (
-      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-8">
         <div className="text-center">
           <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center">
             <div className="w-8 h-8 bg-slate-300 rounded opacity-50"></div>
@@ -124,7 +124,7 @@ const Table: FC<TableProps> = ({ items, updateItem }): JSX.Element => {
       </AnimatedContainer>
 
       <AnimatedContainer delay={200}>
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden transform hover:shadow-md transition-shadow duration-300">
+        <div className="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden transform hover:shadow-md transition-shadow duration-300">
           <TableHeader
             columns={columns}
             sortConfig={sortConfig}

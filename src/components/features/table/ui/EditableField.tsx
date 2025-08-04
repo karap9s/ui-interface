@@ -109,6 +109,11 @@ const EditableField: FC<EditableFieldProps> = memo(
     try {
       // Boolean field renderer
       if (fieldType === 'boolean') {
+        const booleanOptions = [
+          { value: 'true', label: 'Yes' },
+          { value: 'false', label: 'No' },
+        ];
+
         return (
           <div key={key}>
             <Text
@@ -129,9 +134,9 @@ const EditableField: FC<EditableFieldProps> = memo(
             >
               <Trigger
                 className={cn(
-                  'w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white hover:cursor-pointer inline-flex items-center justify-between h-9',
+                  'w-full p-2 border border-gray-300 dark:border-[#484E54] rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-[#00000040] hover:cursor-pointer inline-flex items-center justify-between h-9',
                   !editable
-                    ? 'bg-gray-50 text-gray-500 cursor-not-allowed'
+                    ? 'bg-gray-50 dark:bg-[#00000040] text-gray-500 dark:text-slate-300 cursor-not-allowed'
                     : 'hover:bg-gray-50'
                 )}
               >
@@ -143,27 +148,20 @@ const EditableField: FC<EditableFieldProps> = memo(
 
               {editable && (
                 <Portal>
-                  <SelectContent className="overflow-hidden bg-white rounded-md shadow-lg border border-gray-200 z-50">
+                  <SelectContent className="overflow-hidden bg-white dark:bg-[#1a1a1a] rounded-md shadow-lg border border-gray-200 dark:border-[#484E54] z-50">
                     <Viewport className="p-1">
-                      <Item
-                        value="true"
-                        className="relative flex items-center px-8 py-2 text-sm text-gray-900 rounded cursor-pointer hover:bg-gray-100 focus:bg-gray-100 outline-none data-[highlighted]:bg-gray-100"
-                      >
-                        <ItemIndicator className="absolute left-2 inline-flex items-center">
-                          <CheckIcon className="h-4 w-4" />
-                        </ItemIndicator>
-                        <ItemText>Yes</ItemText>
-                      </Item>
-
-                      <Item
-                        value="false"
-                        className="relative flex items-center px-8 py-2 text-sm text-gray-900 rounded cursor-pointer hover:bg-gray-100 focus:bg-gray-100 outline-none data-[highlighted]:bg-gray-100"
-                      >
-                        <ItemIndicator className="absolute left-2 inline-flex items-center">
-                          <CheckIcon className="h-4 w-4" />
-                        </ItemIndicator>
-                        <ItemText>No</ItemText>
-                      </Item>
+                      {booleanOptions.map((option) => (
+                        <Item
+                          key={option.value}
+                          value={option.value}
+                          className="relative flex items-center px-8 py-2 text-sm text-gray-900 dark:text-slate-300 rounded cursor-pointer hover:bg-gray-100 focus:bg-gray-100 outline-none data-[highlighted]:bg-gray-100 dark:data-[highlighted]:bg-slate-800 dark:hover:bg-slate-800 dark:focus:bg-slate-800"
+                        >
+                          <ItemIndicator className="absolute left-2 inline-flex items-center">
+                            <CheckIcon className="h-4 w-4" />
+                          </ItemIndicator>
+                          <ItemText>{option.label}</ItemText>
+                        </Item>
+                      ))}
                     </Viewport>
                   </SelectContent>
                 </Portal>
@@ -214,17 +212,19 @@ const EditableField: FC<EditableFieldProps> = memo(
                 <Label className="sr-only">Date</Label>
                 <Group
                   className={cn(
-                    'flex items-center border border-gray-300 rounded-md overflow-hidden h-9',
+                    'flex items-center border border-gray-300 dark:border-[#484E54] rounded-md overflow-hidden h-9',
                     !editable && 'bg-gray-50'
                   )}
                 >
-                  <DateInput className="p-2 flex-1 text-sm">
+                  <DateInput className="p-2 flex-1 text-sm dark:bg-[#00000040]">
                     {(segment) => (
                       <DateSegment
                         segment={segment}
                         className={cn(
                           'focus:outline-none pr-1 rounded',
-                          !editable ? 'text-gray-500' : 'focus:bg-blue-100'
+                          !editable
+                            ? 'text-gray-500'
+                            : 'focus:bg-blue-100 dark:focus:text-black'
                         )}
                       />
                     )}
@@ -240,7 +240,7 @@ const EditableField: FC<EditableFieldProps> = memo(
                 <Label className="sr-only">Time</Label>
                 <DateInput
                   className={cn(
-                    'flex items-center border border-gray-300 rounded-md p-2 h-9',
+                    'flex items-center border border-gray-300 dark:border-[#484E54] dark:bg-[#00000040] rounded-md p-2 h-9',
                     !editable && 'bg-gray-50'
                   )}
                 >
@@ -249,7 +249,9 @@ const EditableField: FC<EditableFieldProps> = memo(
                       segment={segment}
                       className={cn(
                         'focus:outline-none pr-1 rounded',
-                        !editable ? 'text-gray-500' : 'focus:bg-blue-100'
+                        !editable
+                          ? 'text-gray-500'
+                          : 'focus:bg-blue-100 dark:focus:text-black'
                       )}
                     />
                   )}
