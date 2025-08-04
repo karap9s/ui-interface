@@ -40,13 +40,15 @@ const TableFilters: FC<TableFiltersProps> = memo(
     );
 
     return (
-      <div className="bg-white p-4 border border-gray-200 rounded-lg mb-4">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
+      <div className="bg-white dark:bg-slate-900 p-6 border border-slate-200 rounded-xl shadow-sm mb-6">
+        <div className="flex justify-between items-center mb-6">
+          <h3 className="text-xl font-bold text-slate-900 bg-gradient-to-r from-indigo-600 to-blue-600 bg-clip-text">
+            Filters
+          </h3>
           {values.length > 0 && (
             <button
               onClick={handleClearAllFilters}
-              className="text-sm text-blue-600 hover:text-blue-800 focus:outline-none hover:cursor-pointer"
+              className="px-4 py-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 bg-indigo-50 hover:bg-indigo-100 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
             >
               Clear all
             </button>
@@ -107,9 +109,11 @@ const TableFilters: FC<TableFiltersProps> = memo(
         </div>
 
         {values.length > 0 && (
-          <div className="mt-4 pt-4 border-t border-gray-200">
-            <div className="flex flex-wrap gap-2">
-              <span className="text-sm text-gray-600">Active filters:</span>
+          <div className="mt-6 pt-6 border-t border-slate-200">
+            <div className="flex flex-wrap gap-3">
+              <span className="text-sm font-medium text-slate-600 flex items-center mb-2">
+                Active filters:
+              </span>
               {values.map((filter) => {
                 const config = configs.find((c) => c.key === filter.key);
                 if (!config) return null;
@@ -119,16 +123,17 @@ const TableFilters: FC<TableFiltersProps> = memo(
                 return (
                   <span
                     key={filter.key}
-                    className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 text-xs rounded-full"
+                    className="inline-flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-indigo-100 to-blue-100 text-indigo-800 text-sm font-medium rounded-lg border border-indigo-200 shadow-sm"
                   >
-                    {config.label}: {displayValue}
+                    {config.label}:{' '}
+                    <span className="font-semibold">{displayValue}</span>
                     <button
                       onClick={() =>
                         handleRemoveFilter(filter.key, filter.type)
                       }
-                      className="hover:text-blue-600 focus:outline-none"
+                      className="ml-1 hover:text-indigo-600 hover:bg-indigo-200 rounded-full p-1 transition-all duration-200 focus:outline-none"
                     >
-                      <X size={16} />
+                      <X size={14} />
                     </button>
                   </span>
                 );

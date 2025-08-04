@@ -17,6 +17,7 @@ import {
   FilterValue,
 } from '@/src/components/features/table/lib/filterHelpers';
 import { useModalStore } from '@/src/components/entities/modal/store/modalStore';
+import AnimatedContainer from '@/src/components/shared/ui/AnimatedContainer';
 const Table: FC<TableProps> = ({ items, updateItem }): JSX.Element => {
   const [sortConfig, setSortConfig] = useState<SortConfig | null>(null);
   const [filters, setFilters] = useState<FilterValue[]>([]);
@@ -96,28 +97,42 @@ const Table: FC<TableProps> = ({ items, updateItem }): JSX.Element => {
 
   if (!items.length) {
     return (
-      <div className="border border-gray-200 rounded-lg">
-        <div className="p-8 text-center text-gray-500">No data to display</div>
+      <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8">
+        <div className="text-center">
+          <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-slate-100 to-slate-200 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-slate-300 rounded opacity-50"></div>
+          </div>
+          <h3 className="text-lg font-medium text-slate-900 mb-2">
+            No data to display
+          </h3>
+          <p className="text-slate-500">
+            There are no items to show at the moment.
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-4">
-      <TableFilters
-        configs={filterConfigs}
-        values={filters}
-        onChange={handleFiltersChange}
-      />
-
-      <div className="border border-gray-200 rounded-lg overflow-hidden">
-        <TableHeader
-          columns={columns}
-          sortConfig={sortConfig}
-          onSort={handleSort}
+    <div className="space-y-6">
+      <AnimatedContainer delay={100}>
+        <TableFilters
+          configs={filterConfigs}
+          values={filters}
+          onChange={handleFiltersChange}
         />
-        <TableBody items={processedItems} columns={columns} />
-      </div>
+      </AnimatedContainer>
+
+      <AnimatedContainer delay={200}>
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden transform hover:shadow-md transition-shadow duration-300">
+          <TableHeader
+            columns={columns}
+            sortConfig={sortConfig}
+            onSort={handleSort}
+          />
+          <TableBody items={processedItems} columns={columns} />
+        </div>
+      </AnimatedContainer>
 
       {editRowData && (
         <EditRowDialog

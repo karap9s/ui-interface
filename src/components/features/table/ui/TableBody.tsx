@@ -9,7 +9,7 @@ interface TableBodyProps {
 const TableBody: FC<TableBodyProps> = memo(
   ({ items, columns }): JSX.Element => {
     return (
-      <div className="divide-y divide-gray-200 max-h-[calc(100dvh-56px)] overflow-y-auto">
+      <div className="max-h-[calc(100dvh-200px)] overflow-y-auto">
         {items.map((row, index) => {
           try {
             return (

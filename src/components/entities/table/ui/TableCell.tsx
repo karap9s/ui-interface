@@ -9,11 +9,10 @@ import { getNestedValue } from '@/src/components/features/table/lib/tableHelpers
 interface TableCellProps {
   row: Record<string, unknown>;
   columnKey: string;
-  className?: string;
 }
 
 const TableCell: FC<TableCellProps> = memo(
-  ({ row, columnKey, className = 'px-4 py-3 text-gray-900' }): JSX.Element => {
+  ({ row, columnKey }): JSX.Element => {
     const value = useMemo(() => {
       try {
         return getNestedValue(row, columnKey);
@@ -47,7 +46,11 @@ const TableCell: FC<TableCellProps> = memo(
       }
     }, [value, columnKey]);
 
-    return <div className={className}>{renderedValue}</div>;
+    return (
+      <div className="px-6 py-4 text-slate-700 group-hover:text-slate-900 transition-colors duration-200">
+        {renderedValue}
+      </div>
+    );
   }
 );
 
