@@ -47,8 +47,10 @@ const TableCell: FC<TableCellProps> = memo(
     }, [value, columnKey]);
 
     return (
-      <div className="px-6 py-4 text-slate-700 group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-slate-100 transition-colors duration-200 flex items-center min-h-[60px]">
-        {renderedValue}
+      <div className="px-3 py-2 sm:px-6 sm:py-3 text-sm sm:text-base text-slate-700 group-hover:text-slate-900 dark:text-slate-300 dark:group-hover:text-slate-100 transition-colors duration-200 flex items-center justify-start h-[64px] sm:h-[80px] overflow-hidden">
+        <div className="line-clamp-2 w-full leading-tight">
+          {renderedValue}
+        </div>
       </div>
     );
   }
