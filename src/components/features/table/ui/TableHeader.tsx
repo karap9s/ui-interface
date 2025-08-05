@@ -39,11 +39,11 @@ const TableHeader: FC<TableHeaderProps> = memo(
         {columns.map((key, index) => (
           <button
             key={`${key}-${index}`}
-            className="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300 text-left dark:bg-slate-950 hover:bg-slate-200/50 dark:hover:bg-slate-900 transition-all duration-200 focus:outline-none focus:bg-slate-200/50 dark:focus:bg-slate-900 hover:cursor-pointer group"
+            className="px-3 py-2 sm:px-6 sm:py-3 font-semibold text-sm sm:text-base text-slate-700 dark:text-slate-300 text-left dark:bg-slate-950 hover:bg-slate-200/50 dark:hover:bg-slate-900 transition-all duration-200 focus:outline-none focus:bg-slate-200/50 dark:focus:bg-slate-900 hover:cursor-pointer group h-[64px] sm:h-[80px] flex items-center"
             onClick={() => handleSort(key)}
           >
             <div className="flex items-center justify-between">
-              <span className="text-sm uppercase tracking-wide">
+              <span className="text-xs sm:text-sm uppercase tracking-wide">
                 {parseTableHeader(key)}
               </span>
               {getSortIcon(key) && (

@@ -16,7 +16,7 @@ const TableRow: FC<TableRowProps> = memo(({ row, columns }): JSX.Element => {
 
   return (
     <div
-      className="grid hover:bg-indigo-50/30 transition-all duration-200 hover:cursor-pointer border-b border-slate-100 last:border-b-0 group dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-slate-800"
+      className="grid hover:bg-indigo-50/30 transition-all duration-200 hover:cursor-pointer border-b border-slate-100 last:border-b-0 group dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-slate-800 h-16 sm:h-20"
       style={{ gridTemplateColumns: `repeat(${columns.length}, 1fr)` }}
       onClick={handleRowClick}
     >
